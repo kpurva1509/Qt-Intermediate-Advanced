@@ -1,0 +1,11 @@
+#include "consumer.h"
+
+Consumer::Consumer(QObject *parent) : QObject(parent)
+{
+    qInfo() << "Constructed: " << this;
+}
+
+Consumer::~Consumer()
+{
+    qInfo() << "Destroyed: " << this;
+}

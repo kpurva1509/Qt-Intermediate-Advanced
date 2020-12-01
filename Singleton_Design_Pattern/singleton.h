@@ -1,0 +1,69 @@
+#ifndef SINGLETON_H
+#define SINGLETON_H
+
+#include <QtGlobal>
+#include <QScopedPointer>
+#include "call_once.h"
+
+template<typename T>
+class Singleton{
+
+    /* pointer to a function which takes no args,
+     * and returns a pointer to T object
+     * Help link:
+     * https://riptutorial.com/c/example/31818/typedef-for-function-pointers
+     */
+    typedef T* (*create_instance_function)();
+
+public:
+    /* create - a function w/o args, and returns
+     * a pointer to T
+     */
+    static T* instance(create_instance_function create);
+
+private:
+    static void init();
+    Singleton();
+    ~Singleton();
+    Q_DISABLE_COPY(Singleton)
+    static QBasicAtomicPointer<void> create;
+    static QBasicAtomicInt flag;
+    static QBasicAtomicPointer<void> tptr;
+    bool inited;
+};
+
+/* Member method implementation */
+
+template<typename T>
+Singleton<T>::Singleton() {
+    inited = true;
+}
+
+template<typename T>
+void Singleton<T>::init() {
+    /* creation of Singleton object invokes the
+     * C'tor which sets the inited flag to true
+     */
+    static Singleton singleton;
+    if(singleton.inited) {
+        create_instance_function createFunction = (create_instance_function)Singleton::create.load();
+        tptr.store(createFunction);
+    }
+}
+
+template<typename T>
+Singleton<T>::~Singleton() {
+    T* createdtptr = (T*)tptr.fetchAndStoreOrdered(nullptr);
+    if(createdtptr) {
+        delete createdtptr;
+    }
+    create.store(nullptr);
+}
+
+/* static member initialization */
+
+template<typename T> QBasicAtomicPointer<void> Singleton<T>::create = Q_BASIC_ATOMIC_INITIALIZER(nullptr);
+template<typename T> QBasicAtomicInt Singleton<T>::flag = Q_BASIC_ATOMIC_INITIALIZER(call_once::CO_Request);
+template<typename T> QBasicAtomicPointer<void> Singleton<T>::tptr = Q_BASIC_ATOMIC_INITIALIZER(nullptr);
+
+#endif // SINGLETON_H
