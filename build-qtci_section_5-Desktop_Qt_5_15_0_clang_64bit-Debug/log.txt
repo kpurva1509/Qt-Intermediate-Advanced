@@ -1,0 +1,6 @@
+Wed Jul 29 18:35:41 2020 - Info File:  "/Users/purvakulkarni/Desktop/QT_Examples/build-qtci_section_5-Desktop_Qt_5_15_0_clang_64bit-Debug/log.txt" in %2 file: ../qtci_section_5/main.cpp line: 60
+Wed Jul 29 18:35:41 2020 - Info test in %2 file: ../qtci_section_5/main.cpp line: 63
+Wed Jul 29 18:35:41 2020 - Info Operation completed in %2 file: ../qtci_section_5/main.cpp line: 69
+Wed Jul 29 18:37:00 2020 - Info File:  "/Users/purvakulkarni/Desktop/QT_Examples/build-qtci_section_5-Desktop_Qt_5_15_0_clang_64bit-Debug/log.txt" in %2 file: ../qtci_section_5/main.cpp line: 60
+Wed Jul 29 18:37:00 2020 - Info test in %2 file: ../qtci_section_5/main.cpp line: 63
+Wed Jul 29 18:37:00 2020 - Info Operation completed in %2 file: ../qtci_section_5/main.cpp line: 69
